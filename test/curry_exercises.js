@@ -4,13 +4,14 @@
 var s = require('../lib/support'),
     _ = require('ramda'),
     curry = s.curry,
+    compose = s.compose,
     split = s.split,
     filter = s.filter,
     match = s.match,
     map = s.map,
     reduce = s.reduce;
 
-void _;
+void _; void compose;
 
 // Exercise 1
 //==============
@@ -55,7 +56,6 @@ var slice = curry(function (start, end, array) {
 // ============
 // use slice to define a function "take" that takes n elements. Make it curried
 var take = slice(0);
-
 
 module.exports = {
     words: words,
