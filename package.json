@@ -47,8 +47,11 @@
     "istanbul": "^0.3.20",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.0.1",
+    "lodash.curry": "^4.0.0",
+    "memoize": "^0.1.1",
     "mocha": "^2.3.2",
     "nodemon": "^1.6.1",
+    "ramda": "^0.19.1",
     "sinon": "^1.16.1",
     "sinon-chai": "^2.8.0",
     "underscore": "^1.8.3"
