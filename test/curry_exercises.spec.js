@@ -29,6 +29,7 @@ describe('Curry Exercises', function(){
 
     it('Exercise 3', function(){
         assert.equal(E.max([323,523,554,123,5234]), 5234);
+        assert.equal(E.max([-323,-523,-554,-123,-5234]), -123);
     });
 
     if (E.slice !== undefined) {

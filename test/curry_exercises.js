@@ -39,15 +39,15 @@ var filterQs = filter(match(/q/i));
 var _keepHighest = function (x,y) { return x >= y ? x : y; };
 
 // REFACTOR THIS ONE:
-var max = reduce(curry(_keepHighest), 0);
+var max = reduce(_keepHighest, -Infinity);
 
   
 // Bonus 1:
 // ============
 // wrap array's slice to be functional and curried.
 // //[1,2,3].slice(0, 2)
-var slice = curry(function (a, b, array) {
-    return array.slice(a, b);
+var slice = curry(function (start, end, array) {
+    return array.slice(start, end);
 });
 
 
