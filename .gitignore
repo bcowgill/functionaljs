@@ -1,7 +1,14 @@
+# Removing personal notes file
+notes.txt
+
+# Documentation
+doc
+docs
+
 # Logs
-logs
+log/*
+logs/*
 *.log
-npm-debug.log*
 
 # Runtime data
 pids
@@ -12,7 +19,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+/coverage/
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -24,10 +31,31 @@ coverage
 build/Release
 
 # Dependency directory
-node_modules
+# Deployed apps should consider commenting this line out:
+# see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
+/node_modules/
+/npm-debug.log*
 
 # Optional npm cache directory
 .npm
 
 # Optional REPL history
 .node_repl_history
+
+# Created by https://www.gitignore.io
+
+# Editor files
+
+### Intellij ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+
+*.iml
+.vscode/
+
+## Directory-based project format:
+.idea/
+
+## File-based project format:
+*.ipr
+*.iws
+
