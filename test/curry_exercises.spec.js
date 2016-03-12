@@ -33,13 +33,19 @@ describe('Curry Exercises', function(){
 
     if (E.slice !== undefined) {
         it('Curry Bonus 1', function(){
-            assert.deepEqual(E.slice(1)(3)(['a', 'b', 'c']), ['b', 'c']);
+            assert.deepEqual(
+                E.slice(1)(3)(['a', 'b', 'c']),
+                ['b', 'c']
+            );
         });
     }
 
     if (E.take !== undefined) {
         it('Curry Bonus 2', function(){
-            assert.deepEqual(E.take(2)(['a', 'b', 'c']), ['a', 'b']);
+            assert.deepEqual(
+                E.take(2)(['a', 'b', 'c']),
+                ['a', 'b']
+            );
         });
     }
 
