@@ -1,7 +1,8 @@
 'use strict';
 
-var s = require('../lib/support2'),
-    E = require('./functor_exercises'),
+var rsigs = require('ramda-debug'),
+    s = rsigs.wrap(require('../lib/support2')),
+    E = rsigs.wrap(require('./functor_exercises')),
     assert = require('chai').assert,
     Identity = s.Identity,
     Maybe = s.Maybe,
@@ -15,8 +16,10 @@ describe('Functor Exercises', function(){
     });
 
     it('Exercise 2', function(){
+        rsigs.on();
         var xs = Identity.of(['do', 'ray', 'me', 'fa', 'so', 'la', 'ti', 'do']);
         assert.deepEqual(E.ex2(xs), Identity.of('do'));
+        rsigs.off();
     });
 
     it('Exercise 3a', function(){

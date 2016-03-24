@@ -2,7 +2,8 @@
 
 var s = require('../lib/support2'),
     Task = require('data.task'),
-    _ = require('ramda'),
+    rdebug = require('ramda-debug'),
+    _ = rdebug.wrap(require('ramda')),
     Identity = s.Identity,
     Maybe = s.Maybe,
     Left = s.Left,
