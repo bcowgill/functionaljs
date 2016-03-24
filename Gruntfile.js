@@ -243,7 +243,8 @@ build = function (grunt) {
 	grunt.registerTask('tdd', ['watch:tdd']);
 	grunt.registerTask('watcher', ['watch:all']);
 	grunt.registerTask('coverage', [
-		'mocha_istanbul:coverage'
+		'test'
+		//'mocha_istanbul:coverage'
 	]);
 	grunt.registerTask('coveralls', [
 		'mocha_istanbul:coveralls'
