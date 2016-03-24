@@ -71,6 +71,7 @@ build = function (grunt) {
 		jshint: {
 			options: {
 				jshintrc: '.jshintrc',
+				reporter: require('jshint-stylish'),
 				globals: {},
 			},
 			gruntfile: {

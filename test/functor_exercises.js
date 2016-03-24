@@ -13,7 +13,7 @@ var s = require('../lib/support2'),
 // ==========
 // Use _.add(x,y) and _.map(f,x) to make a function that increments a value inside a functor
 
-var ex1;
+var ex1 = _.map(_.add(1));
 
 
 
