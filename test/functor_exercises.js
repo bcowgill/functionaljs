@@ -17,13 +17,12 @@ var ex1 = _.map(_.add(1));
 
 
 
-
 // Exercise 2
 // ==========
 // Use _.head to get the first element of the list
 var xs = Identity.of(['do', 'ray', 'me', 'fa', 'so', 'la', 'ti', 'do']);
 void xs;
-var ex2;
+var ex2 = _.map(_.head);
 
 
 
@@ -37,7 +36,7 @@ var user = { id: 2, name: 'Albert' };
 void user;
 void safeProp;
 
-var ex3;
+var ex3 = _.compose(_.map(_.head), safeProp('name'));
 
 
 
@@ -45,13 +44,24 @@ var ex3;
 // ==========
 // Use Maybe to rewrite ex4 without an if statement
 
+/*
 var ex4 = function (n) {
-    /* jshint maxcomplexity: 2 */
+    /!* jshint maxcomplexity: 2 *!/
     if (n) { return parseInt(n); }
 };
+*/
 
-var ex4
-    ;
+var maybeNumber = _.compose(
+    Maybe.of,
+    _.cond([
+        [_.equals(null), _.always(null)],
+        [isNaN, _.always(null)],
+        [_.T, _.identity]
+    ]),
+    parseInt
+);
+
+var ex4 = maybeNumber;
 
 
 
@@ -126,5 +136,6 @@ module.exports = {
     ex5: ex5,
     ex6: ex6,
     ex7: ex7,
-    ex8: ex8
+    ex8: ex8,
+    maybeNumber: maybeNumber
 };

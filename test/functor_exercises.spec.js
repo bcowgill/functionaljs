@@ -19,13 +19,54 @@ describe('Functor Exercises', function(){
         assert.deepEqual(E.ex2(xs), Identity.of('do'));
     });
 
-    it('Exercise 3', function(){
+    it('Exercise 3a', function(){
         var user = { id: 2, name: 'Albert' };
         assert.deepEqual(E.ex3(user), Maybe.of('A'));
+        assert.equal(E.ex3(user).isNothing(), false);
     });
 
-    it('Exercise 4', function(){
+    it('Exercise 3b', function(){
+        var nouser = { id: 3 };
+        assert.equal(E.ex3(nouser).isNothing(), true);
+    });
+
+    it('Exercise 3c', function(){
+        var nouser = { id: 3 };
+        assert.equal(E.ex3(nouser).isNothing(), true);
+    });
+
+    it('Exercise 4.a', function(){
+        assert.equal(s.notrace('4.a', E.maybeNumber('4')).isNothing(), false);
+        assert.deepEqual(E.maybeNumber('4'), Maybe.of(4));
+    });
+    it('Exercise 4.b', function(){
+        assert.equal(E.maybeNumber().isNothing(), true);
+    });
+    it('Exercise 4.c', function(){
+        assert.equal(s.notrace('4.c', E.maybeNumber()).isNothing('nonumber'), true);
+    });
+    it('Exercise 4.d', function(){
+        assert.equal(s.notrace('4.d', E.maybeNumber('')).isNothing(), true);
+    });
+    it('Exercise 4.e', function(){
+        assert.equal(s.notrace('4.e', E.maybeNumber(0)).isNothing(), false);
+    });
+
+    it('Exercise 4a', function(){
         assert.deepEqual(E.ex4('4'), Maybe.of(4));
+        assert.equal(E.ex4('4').isNothing(), false);
+    });
+    it('Exercise 4b', function(){
+        assert.equal(E.ex4().isNothing(), true);
+    });
+    it('Exercise 4c', function(){
+        assert.equal(s.notrace('4c', E.ex4()).isNothing('nonumber'), true);
+    });
+    it('Exercise 4d', function(){
+        assert.equal(s.notrace('4d', E.ex4('')).isNothing(), true);
+    });
+    it('Exercise 4e', function(){
+        assert.equal(s.notrace('4e', E.ex4(0)).isNothing(), false);
     });
 
     it('Exercise 5', function(done){
