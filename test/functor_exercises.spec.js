@@ -1,8 +1,12 @@
 'use strict';
 
 var rsigs = require('ramda-debug'),
+/*
     s = rsigs.wrap(require('../lib/support2')),
     E = rsigs.wrap(require('./functor_exercises')),
+*/
+    s = require('../lib/support2'),
+    E = require('./functor_exercises'),
     assert = require('chai').assert,
     Identity = s.Identity,
     Maybe = s.Maybe,
@@ -16,10 +20,8 @@ describe('Functor Exercises', function(){
     });
 
     it('Exercise 2', function(){
-        rsigs.on();
         var xs = Identity.of(['do', 'ray', 'me', 'fa', 'so', 'la', 'ti', 'do']);
         assert.deepEqual(E.ex2(xs), Identity.of('do'));
-        rsigs.off();
     });
 
     it('Exercise 3a', function(){
@@ -72,18 +74,24 @@ describe('Functor Exercises', function(){
         assert.equal(s.notrace('4e', E.ex4(0)).isNothing(), false);
     });
 
+    rsigs.on();
+    rsigs.off();
     it('Exercise 5', function(done){
+
         E.ex5(13).fork(console.log, function(res){
             assert.deepEqual(res, 'LOVE THEM FUTURES');
             done();
         });
+
     });
 
-    it('Exercise 6', function(){
+    it('Exercise 6a', function(){
         assert.deepEqual(
             E.ex6({active: false, name: 'Gary'}),
             Left.of('Your account is not active')
         );
+    });
+    it('Exercise 6b', function(){
         assert.deepEqual(
             E.ex6({active: true, name: 'Theresa'}),
             Right.of('Welcome Theresa')

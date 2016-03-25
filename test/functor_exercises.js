@@ -33,9 +33,7 @@ var ex2 = _.map(_.head);
 var safeProp = _.curry(function (x, o) { return Maybe.of(o[x]); });
 
 var user = { id: 2, name: 'Albert' };
-
 void user;
-void safeProp;
 
 var ex3 = _.compose(_.map(_.head), safeProp('name'));
 
@@ -70,6 +68,8 @@ var ex4 = maybeNumber;
 // ==========
 // Write a function that will getPost then _.toUpper the post's title
 
+// functions returning a Task prefix 'will' or 'tryTo'
+
 // getPost :: Int -> Future({id: Int, title: String})
 var getPost = function (i) {
     return new Task(function(rej, res) {
@@ -80,8 +80,17 @@ var getPost = function (i) {
     });
 };
 
-void getPost;
-var ex5;
+var ucTitle = _.compose(
+    _.toUpper,
+    _.prop('title')
+);
+
+var ex5 = _.compose(
+    _.map(
+        ucTitle
+    ),
+    getPost
+);
 
 
 
@@ -89,16 +98,19 @@ var ex5;
 // ==========
 // Write a function that uses checkActive() and showWelcome() to grant access or return the error
 
-var showWelcome = _.compose(_.add( 'Welcome '), _.prop('name'));
+var showWelcome = _.compose(
+    _.add( 'Welcome '),
+    _.prop('name')
+);
 
 var checkActive = function(user) {
     /* jshint maxcomplexity: 2 */
     return user.active ? Right.of(user) : Left.of('Your account is not active');
 };
-
-void showWelcome;
-void checkActive;
-var ex6;
+var ex6 = _.compose(
+    _.map(showWelcome),
+    checkActive
+);
 
 
 
