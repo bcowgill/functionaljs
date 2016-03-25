@@ -1,3 +1,5 @@
+/* jshint maxstatements: 23 */
+
 'use strict';
 
 var rsigs = require('ramda-debug'),
@@ -76,13 +78,15 @@ describe('Functor Exercises', function(){
 
     rsigs.on();
     rsigs.off();
-    it('Exercise 5', function(done){
-
-        E.ex5(13).fork(console.log, function(res){
-            assert.deepEqual(res, 'LOVE THEM FUTURES');
-            done();
+    it('Exercise 5', function (done) {
+        E
+            .ex5(13)
+            .fork(
+                console.log,
+                function(res){
+                    assert.deepEqual(res, 'LOVE THEM FUTURES');
+                    done();
         });
-
     });
 
     it('Exercise 6a', function(){
@@ -100,11 +104,22 @@ describe('Functor Exercises', function(){
 
     it('Exercise 7', function(){
         assert.deepEqual(E.ex7('fpguy99'), Right.of('fpguy99'));
+        assert.deepEqual(E.ex7('...4'), Right.of('...4'));
         assert.deepEqual(E.ex7('...'), Left.of('You need > 3'));
     });
 
-    it('Exercise 8', function(){
-        assert.deepEqual(E.ex8('fpguy99').unsafePerformIO(), 'fpguy99-saved');
-        assert.deepEqual(E.ex8('...').unsafePerformIO(), 'You need > 3');
+    it('Exercise 8a', function(){
+        assert.deepEqual(
+            E.ex8('fpguy99')
+                .unsafePerformIO(),
+            'fpguy99-saved'
+        );
+    });
+    it('Exercise 8b', function(){
+        assert.deepEqual(
+            E.ex8('...')
+                .unsafePerformIO(),
+            'You need > 3'
+        );
     });
 });

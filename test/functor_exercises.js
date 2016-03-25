@@ -8,6 +8,7 @@ var s = require('../lib/support2'),
     Maybe = s.Maybe,
     Left = s.Left,
     Right = s.Right,
+    either = s.either,
     IO = s.IO;
 
 // Exercise 1
@@ -86,9 +87,11 @@ var ucTitle = _.compose(
 );
 
 var ex5 = _.compose(
+    s.breakPt('break ex5 before map'),
     _.map(
         ucTitle
     ),
+    s.breakPt('break ex5 before getPost'),
     getPost
 );
 
@@ -105,7 +108,9 @@ var showWelcome = _.compose(
 
 var checkActive = function(user) {
     /* jshint maxcomplexity: 2 */
-    return user.active ? Right.of(user) : Left.of('Your account is not active');
+    return user.active ?
+        Right.of(user) :
+        Left.of('Your account is not active');
 };
 var ex6 = _.compose(
     _.map(showWelcome),
@@ -120,8 +125,10 @@ var ex6 = _.compose(
 // Right(x) if it is greater than 3 and Left('You need > 3') otherwise
 
 var ex7 = function(x) {
-    void x;
-    return undefined; // <--- write me. (don't be pointfree)
+    /* jshint maxcomplexity: 2 */
+    return x.length > 3 ?
+        Right.of(x) :
+        Left.of('You need > 3');
 };
 
 
@@ -138,8 +145,19 @@ var save = function(x) {
         return x + '-saved';
     });
 };
-void save;
-var ex8;
+var discard = function (x) {
+    return new IO(function () {
+        return x;
+    });
+};
+void discard;
+var ex8 = _.compose(
+    either(
+        discard,
+        save
+    ),
+    ex7
+);
 
 module.exports = {
     ex1: ex1,
