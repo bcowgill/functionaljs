@@ -2,7 +2,8 @@
 
 var s = require('../lib/support2');
 var Task = require('data.task');
-var _ = require('ramda'),
+var rdebug = require('ramda-debug'),
+    _ = rdebug.wrap(require('ramda')),
     IO = s.IO,
     Right = s.Right,
     Left = s.Left,
@@ -24,17 +25,31 @@ var user = {
     }
 };
 
-var ex1 = void safeProp;
+// ex1 :: User -> String
+var ex1 = _.compose(
+    s.chain(safeProp('name')),
+    s.chain(safeProp('street')),
+    safeProp('address')
+);
 
 
 // Exercise 2
 // ==========
-// Use getFile to get the filename, remove the directory so it's just the file, then purely log it.
+// Use getIOPath to get the filename,
+// remove the directory so it's just the file,
+// then purely log it.
 
-var getFile = function() {
+// getIOPath :: * -> IO String
+var getIOPath = function() {
     return new IO(function(){ return __filename; });
 };
 
+var getFileName = _.compose(
+    _.last,
+    _.split('/')
+);
+
+// pureLog :: String -> IO String
 var pureLog = function(x) {
     return new IO(function(){
         console.log(x);
@@ -42,8 +57,13 @@ var pureLog = function(x) {
     });
 };
 
-void getFile;
-var ex2 = void pureLog;
+// ex2 :: * -> String
+var ex2 = _.compose(
+    s.chain(pureLog),
+    s.chain(_.compose(IO.of, getFileName)),
+    // IO String
+    getIOPath
+);
 
 
 
@@ -51,6 +71,7 @@ var ex2 = void pureLog;
 // ==========
 // Use getPost() then pass the post's id to getComments().
 
+// getPost :: Number -> Task Nothing Article
 var getPost = function(i) {
     return new Task(function (rej, res) {
         void rej;
@@ -60,6 +81,7 @@ var getPost = function(i) {
     });
 };
 
+// getComments :: Number -> Task Nothing [Comment]
 var getComments = function(i) {
     return new Task(function (rej, res) {
         void rej;
@@ -77,8 +99,18 @@ var getComments = function(i) {
     });
 };
 
-void getPost;
-var ex3 = void getComments;
+// ex3 :: Number -> [Comment]
+var ex3 = _.compose(
+    s.chain(
+        _.compose(
+            getComments,
+            // Bonus use safeProp!
+            _.prop('id')
+        )
+    ),
+    getPost
+);
+
 
 
 // Exercise 4
@@ -87,9 +119,9 @@ var ex3 = void getComments;
 // It should safely add a new subscriber to the list, then email everyone with this happy news.
 
 // addToMailingList :: Email -> IO [Email]
-var addToMailingList = (function(list){
-    return function(email) {
-        return new IO(function(){
+var addToMailingList = (function (list) {
+    return function (email) {
+        return new IO(function () {
             list.push(email);
             return list;
         });
@@ -97,8 +129,9 @@ var addToMailingList = (function(list){
 })([]);
 
 // emailBlast :: [Email] -> IO String
-function emailBlast(list) {
-    return new IO(function(){
+function emailBlast (list) {
+    return new IO(function () {
+        console.log('email blasted', list.join(','));
         return 'emailed: ' + list.join(','); // for testing w/o mocks
     });
 }
@@ -106,13 +139,22 @@ function emailBlast(list) {
 void addToMailingList;
 void emailBlast;
 // validateEmail :: Email -> Either String Email
-var validateEmail = function(x){
+var validateEmail = function (x) {
     /* jshint maxcomplexity: 2 */
-    return x.match(/\S+@\S+\.\S+/) ? (new Right(x)) : (new Left('invalid email'));
+    return x.match(/\S+@\S+\.\S+/) ? (new Right(x)) : (new Left('invalid email <' + x + '>'));
 };
 
 // ex4 :: Email -> Either String (IO String)
-var ex4 = void validateEmail;
+var ex4 = _.compose(
+    _.map(
+        _.compose(
+            s.join,
+            _.map(emailBlast),
+            addToMailingList
+        )
+    ),
+    validateEmail
+);
 
 
 module.exports = {ex1: ex1, ex2: ex2, ex3: ex3, ex4: ex4, user: user};

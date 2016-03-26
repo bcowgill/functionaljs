@@ -3,8 +3,9 @@
 var s = require('../lib/support2');
 var E = require('./monad_exercises');
 var assert = require('chai').assert;
-var _ = require('ramda');
-var Maybe = s.Maybe,
+var rdebug = require('ramda-debug'),
+    _ = rdebug.wrap(require('ramda')),
+   Maybe = s.Maybe,
     either = s.either,
     unsafePerformIO = s.unsafePerformIO;
 
@@ -25,9 +26,13 @@ describe('Monad Exercises', function(){
         });
     });
 
-    it('Exercise 4', function(){
-        var getResult = either(_.identity, unsafePerformIO);
-        assert.equal(getResult(E.ex4('notanemail')), 'invalid email');
+    var getResult = either(_.identity, unsafePerformIO);
+    it('Exercise 4a', function(){
+        rdebug.on();
+        assert.equal(getResult(E.ex4('notanemail')), 'invalid email <notanemail>');
+        rdebug.off();
+    });
+    it('Exercise 4b', function(){
         assert.equal(getResult(E.ex4('sleepy@grandpa.net')), 'emailed: sleepy@grandpa.net');
     });
 
