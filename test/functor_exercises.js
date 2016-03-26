@@ -15,6 +15,7 @@ var s = require('../lib/support2'),
 // ==========
 // Use _.add(x,y) and _.map(f,x) to make a function that increments a value inside a functor
 
+// ex1 :: Monad Number -> Monad Number
 var ex1 = _.map(_.add(1));
 
 
@@ -24,6 +25,8 @@ var ex1 = _.map(_.add(1));
 // Use _.head to get the first element of the list
 var xs = Identity.of(['do', 'ray', 'me', 'fa', 'so', 'la', 'ti', 'do']);
 void xs;
+
+// ex2 :: M [a] -> M a
 var ex2 = _.map(_.head);
 
 
@@ -31,11 +34,13 @@ var ex2 = _.map(_.head);
 // Exercise 3
 // ==========
 // Use safeProp and _.head to find the first initial of the user
+// safeProp :: Key -> { Key : a } -> Maybe a
 var safeProp = _.curry(function (x, o) { return Maybe.of(o[x]); });
 
 var user = { id: 2, name: 'Albert' };
 void user;
 
+// ex3 :: { name: [a] } -> Maybe a
 var ex3 = _.compose(_.map(_.head), safeProp('name'));
 
 
@@ -51,6 +56,7 @@ var ex4 = function (n) {
 };
 */
 
+// maybeNumber : Number -> Maybe Number
 var maybeNumber = _.compose(
     Maybe.of,
     _.cond([
@@ -81,11 +87,13 @@ var getPost = function (i) {
     });
 };
 
+// ucTitle :: { title: String } -> String
 var ucTitle = _.compose(
     _.toUpper,
     _.prop('title')
 );
 
+// ex5:: Number -> Future(String)
 var ex5 = _.compose(
     s.breakPt('break ex5 before map'),
     _.map(
@@ -101,17 +109,21 @@ var ex5 = _.compose(
 // ==========
 // Write a function that uses checkActive() and showWelcome() to grant access or return the error
 
+// showWelcome :: User == { name: String } => User -> String
 var showWelcome = _.compose(
     _.add( 'Welcome '),
     _.prop('name')
 );
 
+// checkActive :: User == { active: Boolean } => User -> Either String User
 var checkActive = function(user) {
     /* jshint maxcomplexity: 2 */
     return user.active ?
         Right.of(user) :
         Left.of('Your account is not active');
 };
+
+// ex6 :: User -> String
 var ex6 = _.compose(
     _.map(showWelcome),
     checkActive
@@ -124,6 +136,7 @@ var ex6 = _.compose(
 // Write a validation function that checks for a length > 3. It should return
 // Right(x) if it is greater than 3 and Left('You need > 3') otherwise
 
+// ex7 :: String -> Either String String
 var ex7 = function(x) {
     /* jshint maxcomplexity: 2 */
     return x.length > 3 ?
@@ -139,18 +152,17 @@ var ex7 = function(x) {
 // or return the error message string. Remember either's two arguments must
 // return the same type.
 
+// save :: String -> IO String
 var save = function(x) {
     return new IO(function() {
         console.log('SAVED USER!');
         return x + '-saved';
     });
 };
-var discard = function (x) {
-    return new IO(function () {
-        return x;
-    });
-};
-void discard;
+
+// discard :: String -> IO String
+var discard = IO.of;
+
 var ex8 = _.compose(
     either(
         discard,

@@ -22,6 +22,7 @@ var CARS = [
 // Exercise 1:
 // ============
 // use _.compose() to rewrite the function below. Hint: _.prop() is curried.
+// isLastInStock :: a == { in_stock: b } => [a] -> b
 var isLastInStock = _.compose(
     _.prop('in_stock'),
     _.last
@@ -30,6 +31,7 @@ var isLastInStock = _.compose(
 // Exercise 2:
 // ============
 // use _.compose(), _.prop() and _.head() to retrieve the name of the first car
+// nameOfFirstCar :: a == { name: b } => [a] -> b
 var nameOfFirstCar = _.compose(
     _.prop('name'),
     _.head
