@@ -20,12 +20,11 @@ describe('Monad Exercises', function(){
     });
 
     it('Exercise 3', function(done){
-        rdebug.on();
         E.ex3(13).fork(console.log, function (res) {
+            console.log(res);
             assert.deepEqual(res.map(_.prop('post_id')), [13, 13]);
             done();
         });
-        rdebug.off();
     });
 
     var getResult = either(_.identity, unsafePerformIO);

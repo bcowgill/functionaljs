@@ -104,14 +104,15 @@ var getComments = function(i) {
     });
 };
 
+var getCommentsFromPost = _.compose(
+    getComments,
+    _.prop('id')
+);
+
 // ex3 :: Number -> [Comment]
 var ex3 = _.compose(
     s.chain(
-        _.compose(
-            getComments,
-            // Bonus use safeProp!
-            _.prop('id')
-        )
+        getCommentsFromPost
     ),
     getPost
 );
@@ -162,4 +163,10 @@ var ex4 = _.compose(
 );
 
 
-module.exports = {ex1: ex1, ex2: ex2, ex3: ex3, ex4: ex4, user: user};
+module.exports = {
+    ex1: ex1,
+    ex2: ex2,
+    ex3: ex3,
+    ex4: ex4,
+    user: user
+};
