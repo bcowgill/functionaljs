@@ -1,6 +1,7 @@
 'use strict';
 
 var s = require('../lib/support2');
+var path = require('path');
 var Task = require('data.task');
 var rdebug = require('ramda-debug'),
     _ = rdebug.wrap(require('ramda')),
@@ -46,7 +47,7 @@ var getIOPath = function() {
 
 var getFileName = _.compose(
     _.last,
-    _.split('/')
+    _.split(path.sep)
 );
 
 // pureLog :: String -> IO String
@@ -59,8 +60,12 @@ var pureLog = function(x) {
 
 // ex2 :: * -> String
 var ex2 = _.compose(
-    s.chain(pureLog),
-    s.chain(_.compose(IO.of, getFileName)),
+    s.chain(
+        _.compose(
+            pureLog,
+            getFileName
+        )
+    ),
     // IO String
     getIOPath
 );
@@ -113,6 +118,7 @@ var ex3 = _.compose(
 
 
 
+
 // Exercise 4
 // ==========
 // Use validateEmail, addToMailingList and emailBlast to implement ex4's type signature.
@@ -148,8 +154,7 @@ var validateEmail = function (x) {
 var ex4 = _.compose(
     _.map(
         _.compose(
-            s.join,
-            _.map(emailBlast),
+            s.chain(emailBlast),
             addToMailingList
         )
     ),

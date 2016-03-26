@@ -20,17 +20,17 @@ describe('Monad Exercises', function(){
     });
 
     it('Exercise 3', function(done){
+        rdebug.on();
         E.ex3(13).fork(console.log, function (res) {
             assert.deepEqual(res.map(_.prop('post_id')), [13, 13]);
             done();
         });
+        rdebug.off();
     });
 
     var getResult = either(_.identity, unsafePerformIO);
     it('Exercise 4a', function(){
-        rdebug.on();
         assert.equal(getResult(E.ex4('notanemail')), 'invalid email <notanemail>');
-        rdebug.off();
     });
     it('Exercise 4b', function(){
         assert.equal(getResult(E.ex4('sleepy@grandpa.net')), 'emailed: sleepy@grandpa.net');
