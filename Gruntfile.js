@@ -233,6 +233,7 @@ build = function (grunt) {
 		'mocha-chai-sinon'
 	]);
 	grunt.registerTask('tests', ['test']);
+	grunt.registerTask('validate', ['check']);
 	grunt.registerTask('check', [
 		'jshint:gruntfile',
 		'jshint:lib',
