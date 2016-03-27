@@ -22,7 +22,9 @@
     "covereach": "for plan in `find test/app/ -name *.spec.js`; do echo === $plan ===================================; rm -rf doc/coverage/*; grunt coverage --plan $plan; done",
     "coverage-view": "chromium-browser doc/coverage/index.html",
     "edit": "subl Gruntfile.js app.js package.json README.md `find app/ test/ -type f`",
-    "performance": "siege --internet --file test/urls.lst --concurrent 100 --time 1M"
+    "performance": "siege --internet --file test/urls.lst --concurrent 100 --time 1M",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "flowdebug": "flow --old-output-format; test $? -eq 0 -o $? -eq 2"
   },
   "author": "Brent Cowgill",
   "license": "Unlicense",
@@ -44,6 +46,7 @@
     "data.task": "^3.0.0",
     "debug": "^2.2.0",
     "fantasy-land": "^0.2.1",
+    "flow-bin": "^0.22.1",
     "forever": "^0.15.1",
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^1.0.0",
