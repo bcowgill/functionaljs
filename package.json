@@ -24,7 +24,7 @@
     "edit": "subl Gruntfile.js app.js package.json README.md `find app/ test/ -type f`",
     "performance": "siege --internet --file test/urls.lst --concurrent 100 --time 1M",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
-    "flowdebug": "flow --old-output-format; test $? -eq 0 -o $? -eq 2"
+    "flowold": "flow --old-output-format; test $? -eq 0 -o $? -eq 2"
   },
   "author": "Brent Cowgill",
   "license": "Unlicense",
@@ -52,8 +52,10 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-flow": "^1.0.3",
     "grunt-mocha-chai-sinon": "0.0.9",
     "grunt-mocha-istanbul": "^3.0.1",
+    "grunt-run": "^0.5.2",
     "istanbul": "^0.4.2",
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.1.0",

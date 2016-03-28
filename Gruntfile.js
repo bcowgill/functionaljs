@@ -98,6 +98,34 @@ build = function (grunt) {
 			}
 		},
 		/**
+			Run an external command
+		 	@see {@link https://www.npmjs.com/package/grunt-run Grunt plugin for running script commands}
+		*/
+		run: {
+			flow: {
+				cmd: 'flow',
+				args: [
+					'--color=always',
+					'--strip-root',
+					'--one-line',
+					'--show-all-errors',
+					'--old-output-format' // can't set this with grunt-flow
+				]
+			}
+		},
+		/**
+			Static type checking analysis with flow
+			@see {@link https://github.com/larsonjj/grunt-flow Grunt plugin for flow}
+		 	@see {@link http://flowtype.org/docs/advanced-configuration.html Facebook Flow}
+		*/
+		flow: { // This doesn't work with current version of flow, there are output format errors.
+			files: {},  // Flow doesn't use this, but it is needed for Grunt to run properly
+			options: {
+				style: 'color',
+				server: false // you need to run the flow server manually: flow server
+			}
+		},
+		/**
 			Running tests in the console using mocha/chai/sinon.
 			@see {@link https://github.com/thepeg/grunt-mocha-chai-sinon Grunt plugin for mocha, chai, and sinon}
 			@see {@link http://visionmedia.github.io/mocha/ mocha documentation}
@@ -188,6 +216,10 @@ build = function (grunt) {
 			@see {@link https://github.com/gruntjs/grunt-contrib-watch Grunt watch plugin}
 		*/
 		watch: {
+			flow: {
+				files: ['<%= jshint.lib.src %>'],
+				tasks: ['flow'] // Get the status from the flow server
+			},
 			tdd: {
 				files: [
 					'.jshintignore',
@@ -206,6 +238,8 @@ build = function (grunt) {
 
 	// These plugins provide necessary tasks.
 	[
+		'grunt-run',
+		'grunt-flow',
 		'grunt-contrib-clean',
 		'grunt-contrib-jshint',
 // off for the moment		'grunt-jsdoc',
@@ -237,7 +271,8 @@ build = function (grunt) {
 	grunt.registerTask('check', [
 		'jshint:gruntfile',
 		'jshint:lib',
-		'jshint:test'
+		'jshint:test',
+		'run:flow'
 	]);
 	grunt.registerTask('checktest', ['check', 'test']);
 	grunt.registerTask('checkcover', ['check', 'coverage']);

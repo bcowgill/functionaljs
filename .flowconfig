@@ -1,1 +1,9 @@
+# when a new version of flow is installed, check of grunt-flow
+# will work properly
+[version]
+0.22.1
+
+[include]
+
 [ignore]
+.*/node_modules/flow-bin
