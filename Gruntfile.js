@@ -103,12 +103,18 @@ build = function (grunt) {
 		*/
 		run: {
 			flow: {
+			/**
+				Static type checking analysis with flow
+				@see {@link http://flowtype.org/docs/quick-reference.html Flow Annotation Quick Reference}
+			*/
 				cmd: 'flow',
 				args: [
 					'--color=always',
 					'--strip-root',
 					'--one-line',
 					'--show-all-errors',
+					'--timeout=60',
+					'--retries=5',
 					'--old-output-format' // can't set this with grunt-flow
 				]
 			}
