@@ -1,3 +1,6 @@
+[ignore]
+.*/node_modules/flow-bin
+
 # when a new version of flow is installed, check of grunt-flow
 # will work properly
 [version]
@@ -5,5 +8,3 @@
 
 [include]
 
-[ignore]
-.*/node_modules/flow-bin
